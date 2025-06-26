@@ -9,8 +9,9 @@
 <body class="bg-orange-50 min-h-screen flex flex-col">
   <!-- Header -->
   <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
-    <span class="text-gray-400 text-sm">User - Tampilan menu feedback</span>
+    <span class="text-gray-400 text-sm">Dashboard User</span>
     <div class="flex items-center gap-4">
+      <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
       <button class="text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></button>
       <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 1115 0v.75a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.75z" /></svg></div>
     </div>
@@ -26,25 +27,31 @@
         <span class="font-bold text-orange-700 text-lg">HP Pinjam</span>
       </div>
       <nav class="flex flex-col gap-2">
-        <a href="#" class="bg-orange-300 text-white rounded px-4 py-2 font-semibold">Dashboard</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Pemesanan</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Status Peminjaman</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Pembayaran</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Feedback</a>
+        <a href="/user/dashboard" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'dashboard') { %> bg-orange-300 text-white font-semibold<% } %>">Dashboard</a>
+        <a href="/user/hp" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'hp') { %> bg-orange-300 text-white font-semibold<% } %>">Daftar HP</a>
+        <a href="/user/data-peminjaman" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'riwayat') { %> bg-orange-300 text-white font-semibold<% } %>">Riwayat Peminjaman</a>
+        <a href="/user/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'feedback') { %> bg-orange-300 text-white font-semibold<% } %>">Feedback</a>
       </nav>
     </aside>
     <!-- Main Content -->
-    <main class="flex-1 p-10 bg-orange-50 flex flex-col">
-      <h2 class="text-lg font-semibold mb-6 text-orange-900">Manajemen Feedback</h2>
-      <div class="flex gap-6">
-        <div class="bg-white rounded shadow p-6 w-80">
-          <h3 class="font-bold text-orange-700 mb-2">Beri Feedback Baru</h3>
-          <p class="text-sm text-gray-600">Kirim ulasan, kritik, atau saran baru kepada admin.</p>
-        </div>
-        <div class="bg-white rounded shadow p-6 w-80">
-          <h3 class="font-bold text-orange-700 mb-2">Daftar Feedback Saya</h3>
-          <p class="text-sm text-gray-600">Tampilkan semua feedback yang pernah Anda berikan dan lakukan perubahan jika perlu.</p>
-        </div>
+    <main class="flex-1 p-10 bg-orange-50 flex flex-col items-center">
+      <h2 class="text-lg font-semibold mb-6 text-orange-900">Menu Utama</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
+        <a href="/user/hp" class="bg-white rounded shadow p-8 flex flex-col items-center hover:bg-orange-100 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-orange-500 mb-4"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
+          <span class="font-bold text-orange-700 text-lg mb-2">Daftar HP</span>
+          <span class="text-gray-500 text-sm">Lihat daftar HP yang tersedia untuk dipinjam.</span>
+        </a>
+        <a href="/user/data-peminjaman" class="bg-white rounded shadow p-8 flex flex-col items-center hover:bg-orange-100 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-orange-500 mb-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>
+          <span class="font-bold text-orange-700 text-lg mb-2">Riwayat Peminjaman</span>
+          <span class="text-gray-500 text-sm">Lihat dan kelola riwayat peminjaman Anda.</span>
+        </a>
+        <a href="/user/feedback" class="bg-white rounded shadow p-8 flex flex-col items-center hover:bg-orange-100 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-orange-500 mb-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-2.686 9-6V7.5c0-3.314-4.03-6-9-6s-9 2.686-9 6v6.75c0 3.314 4.03 6 9 6z" /></svg>
+          <span class="font-bold text-orange-700 text-lg mb-2">Feedback</span>
+          <span class="text-gray-500 text-sm">Kirim saran atau kritik ke admin.</span>
+        </a>
       </div>
     </main>
   </div>

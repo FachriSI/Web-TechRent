@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/main.css" rel="stylesheet">
+  <title>Daftar HP</title>
+</head>
+<body class="bg-orange-50 min-h-screen flex flex-col">
+  <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
+    <span class="text-gray-400 text-sm">Daftar HP</span>
+    <div class="flex items-center gap-4">
+      <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
+      <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg></div>
+    </div>
+  </header>
+  <div class="flex flex-1">
+    <aside class="bg-orange-200 w-56 p-6 flex flex-col">
+      <div class="mb-8 flex items-center gap-2">
+        <div class="w-10 h-10 bg-orange-400 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
+        </div>
+        <span class="font-bold text-orange-700 text-lg">HP Pinjam</span>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="/user/dashboard" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'dashboard') { %> bg-orange-300 text-white font-semibold<% } %>">Dashboard</a>
+        <a href="/user/hp" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'hp') { %> bg-orange-300 text-white font-semibold<% } %>">Daftar HP</a>
+        <a href="/user/data-peminjaman" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'riwayat') { %> bg-orange-300 text-white font-semibold<% } %>">Riwayat Peminjaman</a>
+        <a href="/user/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'feedback') { %> bg-orange-300 text-white font-semibold<% } %>">Feedback</a>
+      </nav>
+    </aside>
+    <main class="flex-1 p-10 bg-orange-50 flex flex-col items-center">
+      <h2 class="text-lg font-semibold mb-6 text-orange-900">Daftar HP Tersedia</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+        <% if (daftarHP && daftarHP.length > 0) { %>
+          <% daftarHP.forEach(function(hp) { %>
+            <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-orange-500 mb-2"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
+              <span class="font-bold text-orange-700 text-lg mb-1"><%= hp.nama %></span>
+              <span class="text-gray-500 text-sm mb-2">Status: <%= hp.status %></span>
+              <% if (hp.status === 'tersedia') { %>
+                <a href="/user/form-peminjaman" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-2">Ajukan Peminjaman</a>
+              <% } else { %>
+                <span class="bg-gray-300 text-gray-600 px-4 py-2 rounded mt-2 cursor-not-allowed">Sedang Dipinjam</span>
+              <% } %>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <div class="col-span-3 text-center text-gray-500">Tidak ada HP tersedia.</div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html> 

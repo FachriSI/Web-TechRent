@@ -1,36 +1,34 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const app = express();
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
+const HP = require('./models/hp');
+const authRoutes = require('./routes/auth');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'secret-key-hp',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.get('/', (req, res) => {
-  res.render('index');
+  if (!req.session.userId) return res.redirect('/login');
+  return res.redirect('/user/dashboard');
 });
 
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.post('/login', (req, res) => {
-  const { username, password, role } = req.body;
-  if (role === 'user' && username === 'user' && password === '123') {
-    return res.redirect('/user/dashboard');
-  }
-  if (role === 'admin' && username === 'admin' && password === 'admin123') {
-    return res.redirect('/admin/dashboard');
-  }
-  // Jika login gagal, kembali ke login dengan pesan error sederhana
-  res.send('<script>alert("Username atau password salah!"); window.location.href="/";</script>');
-});
-
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
+app.use(authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

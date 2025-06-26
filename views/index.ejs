@@ -9,8 +9,9 @@
 <body class="bg-orange-50 min-h-screen flex flex-col">
   <!-- Header -->
   <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
-    <span class="text-gray-400 text-sm">Homepage - Daftar HP</span>
+    <span class="text-gray-400 text-sm">Daftar HP</span>
     <div class="flex items-center gap-4">
+      <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
       <button class="text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></button>
       <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg></div>
     </div>
@@ -35,37 +36,32 @@
     <main class="flex-1 p-10 bg-orange-50 flex flex-col">
       <h2 class="text-lg font-semibold mb-6 text-orange-900">Daftar HP</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Dummy data HP -->
-        <div class="bg-white rounded shadow p-6 flex flex-col gap-2">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-orange-200 rounded flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="orange" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="orange"/></svg>
+        <% if (daftarHP && daftarHP.length > 0) { %>
+          <% daftarHP.forEach(function(hp) { %>
+            <div class="bg-white rounded shadow p-6 flex flex-col gap-2">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-orange-200 rounded flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="orange" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="orange"/></svg>
+                </div>
+                <span class="font-bold text-orange-700"><%= hp.nama %></span>
+              </div>
+              <div class="text-sm text-gray-600">Status: 
+                <% if (hp.status === 'tersedia') { %>
+                  <span class="font-semibold text-green-600">Tersedia</span>
+                <% } else { %>
+                  <span class="font-semibold text-red-600">Dipinjam</span>
+                <% } %>
+              </div>
+              <% if (hp.status === 'tersedia') { %>
+                <a href="/user/form-peminjaman" class="mt-2 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-center">Pinjam</a>
+              <% } else { %>
+                <button class="mt-2 bg-gray-300 text-gray-500 px-4 py-2 rounded cursor-not-allowed" disabled>Pinjam</button>
+              <% } %>
             </div>
-            <span class="font-bold text-orange-700">Samsung Galaxy A12</span>
-          </div>
-          <div class="text-sm text-gray-600">Status: <span class="font-semibold text-green-600">Tersedia</span></div>
-          <a href="/user/form-peminjaman" class="mt-2 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-center">Pinjam</a>
-        </div>
-        <div class="bg-white rounded shadow p-6 flex flex-col gap-2">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-orange-200 rounded flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="orange" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="orange"/></svg>
-            </div>
-            <span class="font-bold text-orange-700">Xiaomi Redmi Note 10</span>
-          </div>
-          <div class="text-sm text-gray-600">Status: <span class="font-semibold text-red-600">Dipinjam</span></div>
-          <button class="mt-2 bg-gray-300 text-gray-500 px-4 py-2 rounded cursor-not-allowed" disabled>Pinjam</button>
-        </div>
-        <div class="bg-white rounded shadow p-6 flex flex-col gap-2">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-orange-200 rounded flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="orange" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="orange"/></svg>
-            </div>
-            <span class="font-bold text-orange-700">OPPO A54</span>
-          </div>
-          <div class="text-sm text-gray-600">Status: <span class="font-semibold text-green-600">Tersedia</span></div>
-          <a href="/user/form-peminjaman" class="mt-2 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-center">Pinjam</a>
-        </div>
+          <% }); %>
+        <% } else { %>
+          <div class="col-span-3 text-center text-gray-500">Tidak ada data HP.</div>
+        <% } %>
       </div>
     </main>
   </div>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/main.css" rel="stylesheet">
+  <title>Daftar Feedback Saya</title>
+</head>
+<body class="bg-orange-50 min-h-screen flex flex-col">
+  <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
+    <span class="text-gray-400 text-sm">Daftar Feedback Saya</span>
+    <div class="flex items-center gap-4">
+      <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
+      <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg></div>
+    </div>
+  </header>
+  <div class="flex flex-1">
+    <aside class="bg-orange-200 w-56 p-6 flex flex-col">
+      <div class="mb-8 flex items-center gap-2">
+        <div class="w-10 h-10 bg-orange-400 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
+        </div>
+        <span class="font-bold text-orange-700 text-lg">HP Pinjam</span>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="/user/dashboard" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'dashboard') { %> bg-orange-300 text-white font-semibold<% } %>">Dashboard</a>
+        <a href="/user/hp" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'hp') { %> bg-orange-300 text-white font-semibold<% } %>">Daftar HP</a>
+        <a href="/user/data-peminjaman" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'riwayat') { %> bg-orange-300 text-white font-semibold<% } %>">Riwayat Peminjaman</a>
+        <a href="/user/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'feedback') { %> bg-orange-300 text-white font-semibold<% } %>">Feedback</a>
+      </nav>
+    </aside>
+    <main class="flex-1 p-10 bg-orange-50 flex flex-col">
+      <h2 class="text-lg font-semibold mb-6 text-orange-900">Daftar Feedback Saya</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded shadow">
+          <thead>
+            <tr class="bg-orange-100 text-orange-900">
+              <th class="py-3 px-4 text-left">Tanggal</th>
+              <th class="py-3 px-4 text-left">Komentar</th>
+              <th class="py-3 px-4 text-left">Status</th>
+              <th class="py-3 px-4 text-left">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (feedbacks.length > 0) { %>
+              <% feedbacks.forEach(function(fb) { %>
+                <tr>
+                  <td class="py-2 px-4"><%= fb.createdAt.toLocaleString('id-ID') %></td>
+                  <td class="py-2 px-4"><%= fb.comment %></td>
+                  <td class="py-2 px-4">
+                    <% if (fb.status === 'approved') { %>
+                      <span class="px-2 py-1 rounded bg-green-100 text-green-700">approved</span>
+                    <% } else if (fb.status === 'rejected') { %>
+                      <span class="px-2 py-1 rounded bg-red-100 text-red-700">rejected</span>
+                    <% } else { %>
+                      <span class="px-2 py-1 rounded bg-yellow-100 text-yellow-700">pending</span>
+                    <% } %>
+                  </td>
+                  <td class="py-2 px-4">
+                    <% if (fb.status === 'pending') { %>
+                      <a href="/user/feedback/edit/<%= fb.id %>" class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">Edit</a>
+                      <form method="POST" action="/user/feedback/delete/<%= fb.id %>" style="display:inline" onsubmit="return confirm('Hapus feedback ini?')">
+                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Hapus</button>
+                      </form>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr><td colspan="4" class="text-center py-4">Belum ada feedback.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html> 
