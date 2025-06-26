@@ -4,7 +4,6 @@
 - Login user & admin
 - Daftar HP dinamis
 - Form peminjaman, riwayat, feedback
-- Dashboard admin (opsional)
 
 ## Instalasi
 1. Clone repo ini
