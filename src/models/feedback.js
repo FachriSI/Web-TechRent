@@ -42,4 +42,6 @@ const Feedback = sequelize.define('Feedback', {
   timestamps: true,
 });
 
+Feedback.belongsTo(require('./user'), { foreignKey: 'user_id', as: 'user' });
+
 module.exports = Feedback; 

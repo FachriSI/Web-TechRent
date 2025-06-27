@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./index');
 const HP = require('./hp');
+const User = require('./user');
 
 const Peminjaman = sequelize.define('Peminjaman', {
   id: {
@@ -20,10 +21,18 @@ const Peminjaman = sequelize.define('Peminjaman', {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
+  tanggal_kembali: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
   status: {
-    type: DataTypes.ENUM('pending', 'disetujui', 'ditolak', 'selesai'),
+    type: DataTypes.ENUM('pending', 'disetujui', 'ditolak', 'selesai', 'dikembalikan', 'terlambat'),
     allowNull: false,
     defaultValue: 'pending',
+  },
+  nama: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 }, {
   tableName: 'peminjaman',
@@ -31,5 +40,6 @@ const Peminjaman = sequelize.define('Peminjaman', {
 });
 
 Peminjaman.belongsTo(HP, { foreignKey: 'hpId', as: 'hp' });
+Peminjaman.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 module.exports = Peminjaman; 

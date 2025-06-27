@@ -6,27 +6,44 @@
   <link href="/css/main.css" rel="stylesheet">
   <title>Login</title>
 </head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-    <form method="POST" action="/login">
+<body class="flex items-center justify-center min-h-screen bg-orange-50">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md border-t-8 border-orange-400">
+    <div class="flex flex-col items-center mb-6">
+      <div class="w-14 h-14 bg-orange-400 rounded flex items-center justify-center mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-10 h-10"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
+      </div>
+      <span class="font-bold text-orange-700 text-2xl">TechRent</span>
+    </div>
+    <h2 class="text-xl font-bold mb-6 text-center text-orange-900">Login</h2>
+    <form method="POST" action="/login" id="loginForm">
       <div class="mb-4">
-        <label class="block mb-1">Username</label>
-        <input type="text" name="username" class="w-full border px-3 py-2 rounded" required>
+        <label class="block mb-1 font-medium">Username</label>
+        <input type="text" name="username" id="username" class="w-full border px-3 py-2 rounded" required>
       </div>
       <div class="mb-4">
-        <label class="block mb-1">Password</label>
+        <label class="block mb-1 font-medium">Password</label>
         <input type="password" name="password" class="w-full border px-3 py-2 rounded" required>
       </div>
-      <div class="mb-4">
-        <label class="block mb-1">Login sebagai</label>
-        <select name="role" class="w-full border px-3 py-2 rounded">
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-      <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
+      <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 font-semibold">Login</button>
     </form>
   </div>
+  <script>
+    // Batasi role login sesuai username
+    const usernameInput = document.getElementById('username');
+    const roleSelect = document.getElementById('role');
+    usernameInput.addEventListener('input', function() {
+      if (this.value.trim().toLowerCase() === 'admin') {
+        roleSelect.value = 'admin';
+        roleSelect.querySelector('option[value="user"]').disabled = true;
+        roleSelect.querySelector('option[value="admin"]').disabled = false;
+      } else {
+        roleSelect.value = 'user';
+        roleSelect.querySelector('option[value="admin"]').disabled = true;
+        roleSelect.querySelector('option[value="user"]').disabled = false;
+      }
+    });
+    // Trigger on page load
+    usernameInput.dispatchEvent(new Event('input'));
+  </script>
 </body>
 </html>

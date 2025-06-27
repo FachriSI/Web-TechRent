@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/main.css" rel="stylesheet">
-  <title>Riwayat Peminjaman</title>
+  <title>Manajemen Peminjaman</title>
 </head>
 <body class="bg-orange-50 min-h-screen flex flex-col">
   <!-- Header -->
   <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
-    <span class="text-gray-400 text-sm">Riwayat Peminjaman</span>
+    <span class="text-gray-400 text-sm">Admin - Manajemen Peminjaman</span>
     <div class="flex items-center gap-4">
       <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
       <button class="text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></button>
-      <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg></div>
+      <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 1115 0v.75a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.75z" /></svg></div>
     </div>
   </header>
   <div class="flex flex-1">
@@ -26,65 +26,83 @@
         </div>
         <span class="font-bold text-orange-700 text-lg">TechRent</span>
       </div>
-      <nav class="flex flex-col gap-2">
-        <a href="/user/dashboard" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'dashboard') { %> bg-orange-300 text-white font-semibold<% } %>">Dashboard</a>
-        <a href="/user/hp" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'hp') { %> bg-orange-300 text-white font-semibold<% } %>">Daftar HP</a>
-        <a href="/user/data-peminjaman" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'riwayat') { %> bg-orange-300 text-white font-semibold<% } %>">Riwayat Peminjaman</a>
-        <a href="/user/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100<% if (activePage === 'feedback') { %> bg-orange-300 text-white font-semibold<% } %>">Feedback</a>
+      <nav class="flex flex-col gap-2 mb-4">
+        <a href="/admin/dashboard" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Dashboard</a>
+        <a href="/admin/peminjaman" class="bg-orange-300 text-white rounded px-4 py-2 font-semibold">Manajemen Peminjaman</a>
+        <a href="/admin/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Manajemen Feedback</a>
       </nav>
     </aside>
     <!-- Main Content -->
     <main class="flex-1 p-10 bg-orange-50 flex flex-col">
-      <h2 class="text-lg font-semibold mb-6 text-orange-900">Riwayat Peminjaman</h2>
+      <h2 class="text-lg font-semibold mb-6 text-orange-900">Manajemen Peminjaman</h2>
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white rounded shadow">
           <thead>
-            <tr class="bg-orange-100 text-orange-900">
-              <th class="py-3 px-4 text-left">Nama HP</th>
+            <tr>
+              <th class="py-3 px-4 text-left">User</th>
+              <th class="py-3 px-4 text-left">HP</th>
               <th class="py-3 px-4 text-left">Tanggal Pinjam</th>
               <th class="py-3 px-4 text-left">Tanggal Kembali</th>
+              <th class="py-3 px-4 text-left">Nama Peminjam</th>
               <th class="py-3 px-4 text-left">Status</th>
               <th class="py-3 px-4 text-left">Aksi</th>
             </tr>
           </thead>
           <tbody>
-            <% if (typeof daftarPeminjaman !== 'undefined' && daftarPeminjaman.length > 0) { %>
+            <% if (daftarPeminjaman && daftarPeminjaman.length > 0) { %>
               <% daftarPeminjaman.forEach(function(p) { %>
-                <tr>
+                <tr class="border-b">
+                  <td class="py-2 px-4"><%= p.user ? p.user.username : '-' %></td>
                   <td class="py-2 px-4"><%= p.hp ? p.hp.nama : '-' %></td>
                   <td class="py-2 px-4"><%= p.tanggal %></td>
                   <td class="py-2 px-4"><%= p.tanggal_kembali %></td>
-                  <td class="py-2 px-4">
-                    <% if (p.status === 'pending') { %>
-                      <span class="px-2 py-1 rounded bg-yellow-100 text-yellow-700">Pending</span>
-                    <% } else if (p.status === 'disetujui') { %>
-                      <span class="px-2 py-1 rounded bg-green-100 text-green-700">Disetujui</span>
+                  <td class="py-2 px-4"><%= p.nama ? p.nama : (p.user ? p.user.username : '-') %></td>
+                  <td class="py-2 px-4 capitalize">
+                    <% if (p.status === 'terlambat') { %>
+                      <span class="text-yellow-600 font-semibold">Terlambat</span>
                     <% } else if (p.status === 'dikembalikan') { %>
-                      <span class="px-2 py-1 rounded bg-blue-100 text-blue-700">Dikembalikan</span>
-                    <% } else if (p.status === 'terlambat') { %>
-                      <span class="px-2 py-1 rounded bg-yellow-200 text-yellow-800">Terlambat</span>
+                      <span class="text-blue-600 font-semibold">Dikembalikan</span>
                     <% } else if (p.status === 'selesai') { %>
-                      <span class="px-2 py-1 rounded bg-green-200 text-green-800">Selesai</span>
+                      <span class="text-green-600 font-semibold">Selesai</span>
                     <% } else if (p.status === 'ditolak') { %>
-                      <span class="px-2 py-1 rounded bg-red-100 text-red-700">Ditolak</span>
+                      <span class="text-red-600 font-semibold">Ditolak</span>
                     <% } else { %>
-                      <span class="px-2 py-1 rounded bg-gray-100 text-gray-700"><%= p.status %></span>
+                      <span class="text-gray-700"><%= p.status %></span>
                     <% } %>
                   </td>
                   <td class="py-2 px-4">
                     <% if (p.status === 'pending') { %>
-                      <form method="POST" action="/user/batalkan-peminjaman" onsubmit="return confirm('Batalkan peminjaman ini?')">
+                      <form method="POST" action="/admin/approve-peminjaman" class="inline">
                         <input type="hidden" name="id" value="<%= p.id %>">
-                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Batalkan</button>
+                        <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Approve</button>
+                      </form>
+                      <form method="POST" action="/admin/reject-peminjaman" class="inline ml-2">
+                        <input type="hidden" name="id" value="<%= p.id %>">
+                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Reject</button>
+                      </form>
+                    <% } else if (p.status === 'disetujui') { %>
+                      <form method="POST" action="/admin/mark-dikembalikan" class="inline">
+                        <input type="hidden" name="id" value="<%= p.id %>">
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Dikembalikan</button>
+                      </form>
+                      <form method="POST" action="/admin/mark-terlambat" class="inline ml-2">
+                        <input type="hidden" name="id" value="<%= p.id %>">
+                        <button type="submit" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Terlambat</button>
+                      </form>
+                    <% } else if (p.status === 'selesai') { %>
+                      <span class="text-green-600 font-semibold">Selesai</span>
+                      <form method="POST" action="/admin/mark-dikembalikan" class="inline ml-2">
+                        <input type="hidden" name="id" value="<%= p.id %>">
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Pengembalian</button>
                       </form>
                     <% } else { %>
-                      <span class="text-gray-400">-</span>
+                      <span class="text-gray-500">-</span>
                     <% } %>
                   </td>
                 </tr>
               <% }); %>
             <% } else { %>
-              <tr><td colspan="4" class="text-center py-4">Belum ada riwayat peminjaman.</td></tr>
+              <tr><td colspan="5" class="text-center py-4 text-gray-500">Tidak ada data peminjaman.</td></tr>
             <% } %>
           </tbody>
         </table>

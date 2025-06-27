@@ -28,7 +28,7 @@ router.get('/form-peminjaman', async (req, res) => {
 router.post('/form-peminjaman', async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   try {
-    const { nama, tanggal, hp } = req.body;
+    const { nama, tanggal, tanggal_kembali, hp } = req.body;
     const hpDipilih = await HP.findOne({ where: { nama: hp, status: 'tersedia' } });
     if (!hpDipilih) {
       return res.send('<script>alert("HP tidak tersedia!"); window.location.href="/user/form-peminjaman";</script>');
@@ -37,7 +37,9 @@ router.post('/form-peminjaman', async (req, res) => {
       userId: req.session.userId,
       hpId: hpDipilih.id,
       tanggal,
+      tanggal_kembali,
       status: 'pending',
+      nama,
     });
     await hpDipilih.update({ status: 'dipinjam' });
     res.send('<script>alert("Pengajuan berhasil!"); window.location.href="/user/dashboard";</script>');

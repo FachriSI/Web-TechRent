@@ -9,8 +9,9 @@
 <body class="bg-orange-50 min-h-screen flex flex-col">
   <!-- Header -->
   <header class="bg-orange-100 py-2 px-6 flex items-center justify-between">
-    <span class="text-gray-400 text-sm">Admin - Tampilan menu feedback</span>
+    <span class="text-gray-400 text-sm">Admin - Dashboard</span>
     <div class="flex items-center gap-4">
+      <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
       <button class="text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></button>
       <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-600"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 1115 0v.75a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.75z" /></svg></div>
     </div>
@@ -23,27 +24,33 @@
         <div class="w-10 h-10 bg-orange-400 rounded flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-7 h-7"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="19" r="1.5" fill="white"/></svg>
         </div>
-        <span class="font-bold text-orange-700 text-lg">HP Pinjam</span>
+        <span class="font-bold text-orange-700 text-lg">TechRent</span>
       </div>
-      <nav class="flex flex-col gap-2">
-        <a href="#" class="bg-orange-300 text-white rounded px-4 py-2 font-semibold">Dashboard</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Kelola Pemesanan</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Status Peminjaman</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Pembayaran</a>
-        <a href="#" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Feedback</a>
+      <nav class="flex flex-col gap-2 mb-4">
+        <a href="/admin/dashboard" class="bg-orange-300 text-white rounded px-4 py-2 font-semibold">Dashboard</a>
+        <a href="/admin/peminjaman" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Manajemen Peminjaman</a>
+        <a href="/admin/feedback" class="text-orange-700 rounded px-4 py-2 hover:bg-orange-100">Manajemen Feedback</a>
       </nav>
     </aside>
     <!-- Main Content -->
     <main class="flex-1 p-10 bg-orange-50 flex flex-col">
-      <h2 class="text-lg font-semibold mb-6 text-orange-900">Manajemen Feedback</h2>
-      <div class="flex gap-6">
-        <div class="bg-white rounded shadow p-6 w-80">
-          <h3 class="font-bold text-orange-700 mb-2">Feedback Masuk</h3>
-          <p class="text-sm text-gray-600">Lihat dan kelola semua feedback yang masuk dari user.</p>
+      <h2 class="text-lg font-semibold mb-6 text-orange-900">Dashboard Admin</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <span class="text-3xl font-bold text-orange-600 mb-2"><%= statistik.totalUser %></span>
+          <span class="text-gray-700">Total User</span>
         </div>
-        <div class="bg-white rounded shadow p-6 w-80">
-          <h3 class="font-bold text-orange-700 mb-2">Statistik Feedback</h3>
-          <p class="text-sm text-gray-600">Lihat statistik dan performa feedback yang diterima.</p>
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <span class="text-3xl font-bold text-orange-600 mb-2"><%= statistik.totalHP %></span>
+          <span class="text-gray-700">Total HP</span>
+        </div>
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <span class="text-3xl font-bold text-orange-600 mb-2"><%= statistik.totalDipinjam %></span>
+          <span class="text-gray-700">HP Dipinjam</span>
+        </div>
+        <div class="bg-white rounded shadow p-6 flex flex-col items-center">
+          <span class="text-3xl font-bold text-orange-600 mb-2"><%= statistik.totalPeminjaman %></span>
+          <span class="text-gray-700">Total Peminjaman</span>
         </div>
       </div>
     </main>

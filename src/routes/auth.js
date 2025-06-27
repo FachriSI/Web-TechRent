@@ -3,11 +3,11 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.post('/login', async (req, res) => {
-  const { username, password, role } = req.body;
+  const { username, password } = req.body;
   try {
-    const user = await User.findOne({ where: { username, password, role } });
+    const user = await User.findOne({ where: { username, password } });
     if (!user) {
-      return res.send('<script>alert("Login gagal! Cek username, password, dan role."); window.location.href="/login";</script>');
+      return res.send('<script>alert("Login gagal! Cek username dan password."); window.location.href="/login";</script>');
     }
     req.session.userId = user.id;
     req.session.role = user.role;
